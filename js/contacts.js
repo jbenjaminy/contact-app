@@ -2,11 +2,21 @@
 'use strict';
 $(document).ready(function() {
 
-//FUNCTIONS
+// VARIABLES
+var contacts = []
+var emptyContact = {
+    first: "",
+    last: "",
+    phone: "",
+    street: "",
+    city: "",
+    state: "",
+    zip: ""
+}
 
-    //Adding a contact
+// FUNCTIONS
+    // POPULATES EMPTY CONTACT AND ADDS TO CONTACTS ARRAY
     function addContact() {
-        console.log("hi")
         var newContact = Object.create(emptyContact);
         newContact.first = $("#first-name").val();
         newContact.last = $("#last-name").val();
@@ -20,42 +30,36 @@ $(document).ready(function() {
         return newContact;
     }
 
-    //On Click function populates the empty contacts and adds to contact array
-    $('form').submit(function(event) {
-        event.preventDefault();
-        $('.contact-list').empty();
-        addContact(); 
-        for (var i = 0; i < contacts.length; i++) {
-            $('.contact-list').append("<li><a href='#display-area' class='contact-display' onClick='contactDisplay(" + i + ");'>" + contacts[i].first + " " + contacts[i].last + "</a></li>");
-        }
-        $('.form-control').val(null);
-    });
-
-});
-
-//Click function to select contacts from contact list and display in the contact info session
-function contactDisplay(i) {
+    // SELECT CONTACTS FROM CONTACT LIST AND DISPLAY IN CONTACT INFO SECTION
+    function contactDisplay(i) {
         $("#display-contact").empty();
         $("#display-contact").append("<li>" + contacts[i].first + " " + contacts[i].last + "</li>");
         $("#display-contact").append("<li>" + contacts[i].phone + "</li>");
         $("#display-contact").append("<li>" + contacts[i].street + "</li>");
         $("#display-contact").append("<li>" + contacts[i].city + "," + " " + contacts[i].state + "</li>");
         $("#display-contact").append("<li>" + contacts[i].zip + "</li>");
-}
+    }
 
-// Variables
-var contacts = []
-var fields = ["first", "last", "phone", "street", "city", "state", "zip"]
-var totalFields = 7
-var emptyContact = {
-    first: "",
-    last: "",
-    phone: "",
-    street: "",
-    city: "",
-    state: "",
-    zip: ""
-}
+    // ON CLICK FUNCTION, RUNS ADDCONTACT FUNCTION AND PRINTS TO CONTACT LIST
+    $('form').submit(function(event) {
+        event.preventDefault();
+        $('.contact-list').empty();
+        addContact(); 
+        for (var i = 0; i < contacts.length; i++) {
+            $('.contact-list').append("<li><a href='#display-area' class='contact-display'>" + contacts[i].first + " " + contacts[i].last + "</a></li>");
+        }
+        $('.form-control').val(null);
+    });
+
+    $('#contacts-list').on('click', '.contact-display', function(event) {
+        console.log($(this));
+        console.log("hey");
+    });
+
+});
+
+// onClick='contactDisplay(" + i + ");'
+
 
 
 
